@@ -5,34 +5,38 @@ using UnityEngine;
 public class CarController : MonoBehaviour
 {
 	[SerializeField] private CarSettings carSettings;
-	[SerializeField] private LayerMask groundLayer;
-	[SerializeField] private bool isGrounded;
 	[SerializeField] private Rigidbody sphereRB;
-	[SerializeField] private float moveInput, turnInput;
-	[SerializeField] private float distanceFromGround = 0.5f;
-	[SerializeField] private Transform groundRay;
+	[SerializeField] private float gravityForce = 10f;
+	[SerializeField] private float groundRayLength = 0.5f;
 
+	[SerializeField] private LayerMask groundLayer;
+	[SerializeField] private Transform groundRay;
+	[SerializeField] private Transform[] frontWheels;
+	[SerializeField] private float maxWheelTurn;
+	private bool isGrounded;
+	private float gasInput, turnInput;
 	private void Start()
 	{
 		sphereRB.mass = carSettings.Weight;
 	}
-	//TODO disable controls while in air
-
 
 	// Update is called once per frame
 	private void Update()
 	{
-		moveInput = Input.GetAxisRaw("Vertical");
-		turnInput = Input.GetAxisRaw("Horizontal");
+		gasInput = Input.GetAxisRaw("Vertical");
+		gasInput *= gasInput > 0 ? carSettings.ForwardAcceleration * 1000f : carSettings.ReverseAcceleration * 1000f;
 
-		moveInput *= moveInput > 0 ? carSettings.MaxSpeed : carSettings.MaxReverseSpeed;
+		turnInput = Input.GetAxis("Horizontal");
 
+		//TODO steer by a unit speed somehow idk
 		if (isGrounded)
 		{
-			turnInput *= carSettings.TurnSpeed * Time.deltaTime * Input.GetAxisRaw("Vertical"); //TODO multiply with normalized acceleration from sphereRB?
-			transform.Rotate(0, turnInput, 0, Space.World);
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * carSettings.TurnSpeed * Time.deltaTime * Input.GetAxis("Vertical"), 0f)), 1f);
 		}
-
+		foreach (Transform t in frontWheels)
+		{
+			t.localRotation = Quaternion.Euler(t.localRotation.eulerAngles.x, (turnInput * maxWheelTurn), t.localRotation.eulerAngles.z);
+		}
 		transform.position = sphereRB.transform.position;
 	}
 
@@ -40,19 +44,26 @@ public class CarController : MonoBehaviour
 	{
 		isGrounded = false;
 		RaycastHit hit;
-		if (Physics.Raycast(groundRay.position, -transform.up, out hit, groundLayer))
+
+
+		if (Physics.Raycast(groundRay.position, -transform.up, out hit, groundRayLength, groundLayer))
 		{
 			isGrounded = true;
+			transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
 		}
 
 		if (isGrounded)
 		{
-			sphereRB.AddForce(transform.forward * moveInput, ForceMode.Acceleration);
+			sphereRB.drag = carSettings.GroundDrag;
+			if (gasInput != 0)
+			{
+				sphereRB.AddForce(transform.forward * gasInput);
+			}
 		}
 		else
 		{
-			sphereRB.AddForce(Vector3.up * -carSettings.Weight * 100);
-
+			sphereRB.drag = carSettings.AirDrag;
+			sphereRB.AddForce(Vector3.up * -gravityForce * 100); //TODO prolly just use physics' gravity
 		}
 	}
 }

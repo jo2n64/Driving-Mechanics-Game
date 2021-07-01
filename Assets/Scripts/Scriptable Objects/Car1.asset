@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3337f9b9f77ab44c880a92a985ab1b7, type: 3}
   m_Name: Car1
   m_EditorClassIdentifier: 
+  ForwardAcceleration: 180
+  ReverseAcceleration: 40
   MaxSpeed: 0
-  MaxReverseSpeed: 0
-  TurnSpeed: 0
-  AirDrag: 0
-  GroundDrag: 0
-  Weight: 0
+  TurnSpeed: 180
+  AirDrag: 0.1
+  GroundDrag: 4
+  Weight: 1500
