@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
 	private void Start()
 	{
 		sphereRB.mass = carSettings.Weight;
+		sphereRB.transform.parent = null;
 	}
 
 	// Update is called once per frame

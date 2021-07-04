@@ -63,7 +63,7 @@ public class Drive : MonoBehaviour
 		accel = Input.GetAxis("Vertical");
 		steer = Input.GetAxis("Horizontal");
 		isHandbrakePressed = Input.GetButton("Jump");
-		if (Input.GetKey(KeyCode.R))
+		if (Input.GetKey(KeyCode.T))
 		{
 			ResetPos();
 		}
