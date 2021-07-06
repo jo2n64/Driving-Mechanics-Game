@@ -34,9 +34,12 @@ public class CarController : MonoBehaviour
 		{
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * carSettings.TurnSpeed * Time.deltaTime * Input.GetAxis("Vertical"), 0f)), 1f);
 		}
-		foreach (Transform t in frontWheels)
+		if (frontWheels.Length > 0)
 		{
-			t.localRotation = Quaternion.Euler(t.localRotation.eulerAngles.x, (turnInput * maxWheelTurn), t.localRotation.eulerAngles.z);
+			foreach (Transform t in frontWheels)
+			{
+				t.localRotation = Quaternion.Euler(t.localRotation.eulerAngles.x, (turnInput * maxWheelTurn), t.localRotation.eulerAngles.z);
+			}
 		}
 		transform.position = sphereRB.transform.position;
 	}

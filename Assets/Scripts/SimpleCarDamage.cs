@@ -53,7 +53,6 @@ public class SimpleCarDamage : MonoBehaviour
 
 	private void Repair()
 	{
-		Debug.Log("cock repaired");
 		for (int i = 0; i < meshFilters.Length; i++)
 		{
 			meshFilters[i].mesh.vertices = originalMeshData[i].permaVerts;
@@ -66,7 +65,6 @@ public class SimpleCarDamage : MonoBehaviour
 	{
 		if (IsInLayerMask(other.gameObject, collisionToIgnore))
 		{
-			Debug.Log($"holy moly we collided{other.gameObject.name}");
 			Vector3 colRelVel = other.relativeVelocity;
 			colRelVel.y *= yForceDamp;
 			Vector3 colPointToMe = transform.position - other.contacts[0].point;

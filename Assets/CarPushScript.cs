@@ -12,10 +12,6 @@ public class CarPushScript : MonoBehaviour
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
-	}
-
-	private void FixedUpdate()
-	{
 		rb.AddForce(transform.forward * speed * 100f, ForceMode.Acceleration);
 	}
 }

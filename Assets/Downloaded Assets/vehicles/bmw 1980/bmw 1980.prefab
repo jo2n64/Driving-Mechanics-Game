@@ -6434,7 +6434,6 @@ GameObject:
   - component: {fileID: 2962088815592287998}
   - component: {fileID: 1158870355}
   - component: {fileID: 1158870351}
-  - component: {fileID: 1158870352}
   m_Layer: 0
   m_Name: bmw 1980
   m_TagString: Player
@@ -6572,31 +6571,6 @@ MonoBehaviour:
   maxRPM: 8000
   gearbox: 1
   isHandbrakePressed: 0
---- !u!114 &1158870352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2962088815592287996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8ee0cd9264dded419333681dc643d7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxMoveDelta: 1
-  maxCollisionStrength: 50
-  yForceDamp: 0.1
-  demulitionRange: 0.5
-  impactDirManipulator: 0
-  meshList:
-  - {fileID: 6264804495548936561}
-  - {fileID: 6866510915813098787}
-  - {fileID: 2541716519686459352}
-  - {fileID: 7274942355253257035}
-  - {fileID: 6297928503098954525}
-  - {fileID: 8875822596737436159}
-  - {fileID: 3783614235576456304}
 --- !u!1 &3387166875461744755
 GameObject:
   m_ObjectHideFlags: 0

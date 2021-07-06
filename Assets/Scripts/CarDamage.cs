@@ -11,13 +11,15 @@ public class CarDamage : MonoBehaviour
 	[SerializeField] private float minDamage = 1f;
 
 	[SerializeField] private MeshFilter filter;
-	//[SerializeField] private Rigidbody rb;
+	[SerializeField] private Rigidbody rb;
 	[SerializeField] private MeshCollider col;
 	[SerializeField] private Vector3[] startingVertices, meshVertices;
 	// Start is called before the first frame update
 
 	private void Start()
 	{
+		rb = GetComponent<Rigidbody>();
+		col = GetComponent<MeshCollider>();
 		startingVertices = filter.mesh.vertices;
 		meshVertices = filter.mesh.vertices;
 	}
